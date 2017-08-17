@@ -1,0 +1,139 @@
+﻿/*nav {
+    overflow:auto;
+    width:200px;
+    height:400px;
+    position:fixed;
+}
+*/
+.myCustomNavItem a {
+    display: block;
+    color: grey;
+    font-size: 18px;
+    text-decoration: none;
+    text-align: center;
+    /*padding: 7.5px 0px;*/
+}
+
+    .myCustomNavItem a:hover {
+        background-color: grey;
+        color: white;
+        text-decoration: none;
+        display: block;
+    }
+
+.headingForMenu a {
+    font-size: 24px;
+    display: block;
+    text-decoration: none;
+    color: black;
+    
+}
+
+.headingForMenu {
+    font-size: 34px;
+    font: bolder;
+  text-align:center;
+}
+
+.subscribeSection {
+    background-color: black;
+    color: white;
+    /*padding: 30px 10px 50px 10px;*/ 
+    /*width: 81%;*/
+    margin-top: 18px;
+    display:block;
+}
+
+    .subscribeSection button {
+        background-color: red;
+        border-style: none;
+        display: block;
+        color: white;
+        /*margin-top: 18px;*/
+        /*padding: 6px 18px;*/
+        /*border-radius: 2px;*/
+    }
+
+    /*.subscribeSection input {
+        width: 100%;*/
+    /*}*/
+
+    .subscribeSection button:hover {
+        background-color: grey;
+        color: white;
+        display: block;
+        cursor: pointer;
+    }
+
+.contact h4, p4, input, a {
+    display:block;
+}
+
+.contact button:hover {
+    background-color: blue;
+        color: white;
+        
+        
+}
+
+.about a {
+    text-decoration: underline;
+    margin-bottom: 10px;
+    
+}
+
+.store p4 {
+    margin-bottom: 10px;
+}
+
+/*.store i {
+    
+}*/
+
+.footer {
+    background-color: black;
+    /*padding-top:10px;
+    padding-right:80px;
+    padding-bottom:10px;
+    padding-left:px;*/
+    /*width:950px;
+    margin-right:20px;*/
+    text-decoration-color:white;
+}
+.fa:hover{
+    color:gray;
+}
+
+.footer p{
+    display:inline-block;
+}
+
+.extraClass {
+    font-size: 20px;
+}
+.mainImage{
+    position:relative;
+    width:100%;
+}
+#mainHead{
+    position:absolute;
+    width:100%;
+    /*top:30px;
+    left:20px;*/
+    font-size:50px;
+    color:white;
+}
+#mainButton{
+    position:absolute;
+    /*top:165px;
+    left:20px;*/
+    background-color:black;
+    color:white;
+    border-style:none;
+    /*padding:12px 30px;*/
+}
+#mainButton:hover{
+    background-color:gray;
+    color:black;
+
+}
