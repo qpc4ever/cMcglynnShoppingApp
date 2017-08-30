@@ -6,7 +6,7 @@ using System.Web;
 namespace cMcglynnShoppingApp.Models.CodeFirst
 {
     public class Order
-    {
+    {   
         public int Id { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -20,6 +20,6 @@ namespace cMcglynnShoppingApp.Models.CodeFirst
         public string OrderDetails { get; set; }
         public virtual ApplicationUser Customer { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
-
+       
     }
 }

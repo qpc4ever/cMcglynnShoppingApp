@@ -8,18 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using cMcglynnShoppingApp.Models;
 using cMcglynnShoppingApp.Models.CodeFirst;
+using System.IO;
 
 namespace cMcglynnShoppingApp.Controllers
 {
 
-    public class ItemsController : Controller
+    public class ItemsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+
 
         // GET: Items
         public ActionResult Index()
         {
             return View(db.Items.ToList());
+        }
+        // GET: Items
+        public ActionResult SearchResults(string searchItem)
+        {
+            return View(db.Items.Where(i => i.Name.Contains(searchItem) || i.Description.Contains(searchItem)).ToList());
         }
 
         // GET: Items/Details/5
@@ -50,10 +56,22 @@ namespace cMcglynnShoppingApp.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Create([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item, HttpPostedFileBase image)
         {
+            if (image != null && image.ContentLength > 0)  //CODE TO BE ABLE TO UPLOAD IMAGES
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format.");
+            }
             if (ModelState.IsValid)
             {
+                var filePath = "/Upload/";   //UPLOADING IMAGES TO DATABASE AND PHYSICAL LOCATION "FOLDER"
+                var absPath = Server.MapPath("~" + filePath);
+                item.MediaURL = filePath + image.FileName;
+                image.SaveAs(Path.Combine(absPath, image.FileName));
+
+                item.CreationDate = System.DateTime.Now;
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -84,11 +102,32 @@ namespace cMcglynnShoppingApp.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item)
+        public ActionResult Edit([Bind(Include = "Id,CreationDate,UpdatedDate,Name,Price,MediaURL,Description")] Item item, string mediaURL, HttpPostedFileBase image)
         {
+            if (image != null && image.ContentLength > 0)  //CODE TO BE ABLE TO UPLOAD IMAGES
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format.");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(item).State = EntityState.Modified;
+                if (image != null)
+                {
+                    var filePath = "/Upload/";   //UPLOADING IMAGES TO DATABASE AND PHYSICAL LOCATION "FOLDER"
+                    var absPath = Server.MapPath("~" + filePath);
+                    item.MediaURL = filePath + image.FileName;
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
+                else
+                {
+                    item.MediaURL = mediaURL;
+
+                }
+
+                item.UpdatedDate = System.DateTime.Now;
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -118,6 +157,8 @@ namespace cMcglynnShoppingApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Item item = db.Items.Find(id);
+            var absPath = Server.MapPath("~" + item.MediaURL);  //DELETES IMAGE FROM FOLDER
+            System.IO.File.Delete(absPath);                     //DELETES IMAGE FROM FOLDER
             db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("Index");

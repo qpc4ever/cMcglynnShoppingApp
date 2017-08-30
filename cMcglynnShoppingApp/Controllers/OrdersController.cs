@@ -8,21 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using cMcglynnShoppingApp.Models;
 using cMcglynnShoppingApp.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace cMcglynnShoppingApp.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: Orders
         public ActionResult Index()
         {
+            var user = db.Users.Find(User.Identity.GetUserId());
             return View(db.Orders.ToList());
         }
         
         // GET: Orders/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, bool? justCompleted)
         {
             if (id == null)
             {
@@ -32,6 +34,14 @@ namespace cMcglynnShoppingApp.Controllers
             if (order == null)
             {
                 return HttpNotFound();
+            }
+            if (justCompleted != null && justCompleted == true)
+            {
+                ViewBag.JustCompleted = true;
+            }
+            else
+            {
+                ViewBag.JustCompleted = false;
             }
             return View(order);
         }
@@ -47,13 +57,30 @@ namespace cMcglynnShoppingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Address,City,State,ZipCode,Country,Phone,Total,OrderDate,CustomerId,OrderDetails")] Order order)
+        public ActionResult Create([Bind(Include = "Id,Address,City,State,ZipCode,Country,Phone,Total,OrderDate,CustomerId,OrderDetails")] Order order, decimal total)
         {
             if (ModelState.IsValid)
             {
+                var user = db.Users.Find(User.Identity.GetUserId());     
+                order.CustomerId = user.Id;
+                order.OrderDate = System.DateTime.Now;
+                order.Total = total;
                 db.Orders.Add(order);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                db.SaveChanges();                                 //GENERATES THE ID OF THE ORDER 
+                foreach (var item in user.CartItems.ToList())
+                {
+                    OrderItem orderitem = new OrderItem();      //CREATING A NEW ORDER ITEM FOR EACH CART ITEM
+                    orderitem.ItemId = item.ItemId;
+                    orderitem.OrderId = order.Id;              //ORDER GETS AN ID WHEN IT GETS SAVED TO DATABASE "db.SaveChanges();"
+                    orderitem.Quantity = item.Count;
+                    orderitem.UnitPrice = item.Item.Price;
+                    db.OrederItems.Add(orderitem);
+                    db.CartItems.Remove(item);                   //REMOVES ITEMS FROM CART ONCE THEY'RE ENTERED INTO ORDER
+                    db.SaveChanges();                           // SAVES ALL CHANGES TO DATABASE
+                }
+                
+                
+                return RedirectToAction("Details", new { id = order.Id, justCompleted = true });
             }
 
             return View(order);

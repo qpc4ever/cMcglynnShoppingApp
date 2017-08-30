@@ -1,51 +1,68 @@
 ﻿@model IEnumerable<cMcglynnShoppingApp.Models.CodeFirst.CartItem>
+<div style="margin-left:330px; font:bolder; font-family:'Franklin Gothic Book';">
+    @{
+        ViewBag.Title = "Index";
+    }
 
-@{
-    ViewBag.Title = "Index";
-}
+    <h2>Your Cart</h2>
 
-<h2>Index</h2>
+    <p style="margin-top:4px;">
+        <button style="border-radius: 8px;border: 2px; solid white;" class="w3-button w3-ripple w3-black">@Html.ActionLink("Create New ", "Create")</button>
+    </p>
+    <table class="table">
+        <tr>
+            @*<th>
+                    Customer
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ItemId)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Count)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.created)
+            </th>
+            <th>
+                UnitTotal
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ItemId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Count)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.created)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Customer.FullName)
+                    </td>*@
+                <td>
+                    @item.Item.Name
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created)
+                </td>
+                <td>
+                    @(item.Count * item.Item.Price)
+                </td>
+                <td style="display:inline-flex">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ItemId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Count)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.created)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    </table>
+    <p>
+        Total : $@ViewBag.CartTotal   @*Adds Total To Shopping Cart*@
+    </p>
 
-</table>
+
+    <a href="@Url.Action("Create", "Orders")" class="btn btn-danger">Proceed To Checkout</a>
+</div>

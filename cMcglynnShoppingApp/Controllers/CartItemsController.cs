@@ -8,16 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using cMcglynnShoppingApp.Models;
 using cMcglynnShoppingApp.Models.CodeFirst;
+using Microsoft.AspNet.Identity;
 
 namespace cMcglynnShoppingApp.Controllers
 {
-    public class CartItemsController : Controller
+    public class CartItemsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
-        // GET: CartItems
-        public ActionResult Index()
-        {
+        // GET: CartItems      
+            [Authorize]
+            public ActionResult Index()
+        {   
+            var user = db.Users.Find(User.Identity.GetUserId());// THIS WILL DISPLAY ONLY THE USERS CART ITEMS
             return View(db.CartItems.ToList());
         }
 
@@ -47,18 +50,33 @@ namespace cMcglynnShoppingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,CustomerId,Count,created")] CartItem cartItem)
-        {
-            if (ModelState.IsValid)
+        // id taken from id = item.id from Items index page
+        public ActionResult Create(int? id)
+            // BEGINING OF WHAT WE DID IN SCHOOL
+        {   // to make sure its a good request
+            if (id == null)
             {
-                db.CartItems.Add(cartItem);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Item item = db.Items.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            // this is the actual code that adds the items to the cart
+            CartItem cartitem = new CartItem();
+            var user = db.Users.Find(User.Identity.GetUserId());
 
-            return View(cartItem);
+            cartitem.Count = 1;
+            cartitem.ItemId = id.Value;
+            cartitem.created = System.DateTime.Now;
+            cartitem.CustomerId = user.Id;
+            db.CartItems.Add(cartitem);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Items");          
         }
-
+        // END OF WHAT WE ACTUALLY DID IN SCHOOL TO ADD ITEMS TO CART
         // GET: CartItems/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -83,6 +101,7 @@ namespace cMcglynnShoppingApp.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.Entry(cartItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

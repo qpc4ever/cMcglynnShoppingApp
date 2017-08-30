@@ -1,69 +1,83 @@
 ﻿@model cMcglynnShoppingApp.Models.CodeFirst.Item
+<div style="margin-left:330px; font:bolder; font-family:'Franklin Gothic Book';">
+    @{
+        ViewBag.Title = "Details";
+    }
 
-@{
-    ViewBag.Title = "Details";
-}
+    <h2>Details</h2>
 
-<h2>Details</h2>
+    <div>
+        <h4>Item</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </dt>
 
-<div>
-    <h4>Item</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreationDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreationDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UpdatedDate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UpdatedDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MediaURL)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaURL)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MediaURL)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.MediaURL)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @*"RAW" TO MAKE THE DESCRIPTION TEXT APPEAR WITHOUT HTML <P> TAGS*@
+                @Html.Raw(Model.Description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+        </dl>
 
-    </dl>
-</div>
-<p>
-    <div style="display:inline-flex">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span>
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
     </div>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @using (Html.BeginForm("Create", "CartItems", new { id = Model.Id }, FormMethod.Post))
+    {    //To keep secure
+        @Html.AntiForgeryToken()
+        //input type button
+        <input type="submit" style="border-radius: 8px;" class="w3-button w3-ripple w3-black" value="Add to cart" /><i class="fa fa-shopping-cart"></i>
+    }
+    @*<iframe width="420" height="315"
+            src="https://www.youtube.com/embed/sEBdUiQx6_k?autoplay=1"></iframe>*@
+    
+    <p>
+        <div style="display:inline-flex">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) <span>|</span>
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        </div>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

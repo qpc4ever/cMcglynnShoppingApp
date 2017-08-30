@@ -16,12 +16,12 @@ namespace cMcglynnShoppingApp.Models.CodeFirst
         public virtual Item Item { get; set; }
         public virtual ApplicationUser Customer { get; set; }
 
-        public decimal unitTotal
-        {
-            get
-            {
-                return Count * Item.Price;
-            }
-        }
+        //public decimal unitTotal
+        //{
+        //    get
+        //    {
+        //        return Count * Item.Price;
+        //    }
+        //}
     }
 }

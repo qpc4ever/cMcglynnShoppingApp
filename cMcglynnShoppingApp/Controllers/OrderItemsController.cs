@@ -11,9 +11,9 @@ using cMcglynnShoppingApp.Models.CodeFirst;
 
 namespace cMcglynnShoppingApp.Controllers
 {
-    public class OrderItemsController : Controller
+    public class OrderItemsController : Universal
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: OrderItems
         public ActionResult Index()

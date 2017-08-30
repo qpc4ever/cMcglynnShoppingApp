@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ECommerce App</title>
+    <meta charset="utf-8" />
+
+
+    <link href="~/Assets/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Assets/css folder/myCustomStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+    <div id="myModal" class="modal fade" tabinex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        Subscribe for VIP treatment
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <input type="email" placeholder="Enter your email" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <header class="w3-container w3-xlarge">
+        @Html.Partial("_LoginPartial")
+        <p class="w3-left"></p>
+        <p class="w3-right">
+
+            @if (Request.IsAuthenticated)
+            {
+                @*CODE TO LINK "SHOPPING CART ICON" TO CART ITEMS PAGE*@
+                <a href="@Url.Action("Index", "CartItems")" style="margin-top:6px;"><i class="fa fa-shopping-cart w3-margin-right"></i>@ViewBag.CartItems.Count Items</a>
+
+            }
+            @*//CODE TO LINK DATABASE TO SEARCH BAR, ALSO BEGINING OF "FORM"*@
+
+
+            @using (Html.BeginForm("SearchResults", "Items", FormMethod.Post))
+            {
+                <div class="container">
+                    <div class="row">
+                        <h2></h2>
+                        <div class="search">
+                            <input type="text" class="form-control input-sm"  maxlength="64" name="searchItem" id="searchItem" placeholder="Search"  />
+                            <button type="submit" ><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                @*<input type="text" name="search"/><button type="submit"><i class="fa fa-search"></i></button>*@
+            }
+
+        </p>
+
+
+
+
+    </header>
+    <!----> <nav>
+
+        <div class="w3-sidebar w3-bar-block w3-card-2 w3-animate-left" style="display:none" id="mySidebar">
+            <button class="w3-bar-item w3-button w3-large" onclick="w3_close()">&times;</button>
+            <div>
+                <div class="headingForMenu" style="font: bolder;
+    font-family: 'Copperplate Gothic';
+    text-align:center;">WICKED WATCHES WORLD WIDE</div>
+                <div class="myCustomNavItem">
+
+                    <ul class="navlist list-group">
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Items")">CFW Series</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "Items")">CFAW Series</a>
+
+                        </li>
+                        <li class="list-group-item">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <a href="#collapse" class="myCustomNavItem" data-toggle="collapse" aria-expanded="true">Collection &#9660;</a>
+                                    <div id="collapse" class="panel-collapse collapse" aria-expanded="false">
+                                        <ul class="list-group">
+                                            <li clss="list-group-item">
+                                                <a>2017</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a>2016</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a>2015</a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a>2014</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="myCustomNavItem">
+                                <a href="#" data-toggle="modal" data-target="#myModal" style="text-align:center">Contact</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal">Newsletter</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal">Subscribe</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--   <a href="#" class="w3-bar-item w3-button">CFW Series</a>
+                    <a href="#" class="w3-bar-item w3-button">CFAW Series</a>
+                    <a href="#" class="w3-bar-item w3-button">Collection</a>
+
+                <div>
+                    <a href="#" class="w3-bar-item w3-button">2016</a>
+                    <a href="#" class="w3-bar-item w3-button">2015</a>
+                    <a href="#" class="w3-bar-item w3-button">2014</a>
+                </div>
+                <a href="#" class="w3-bar-item w3-button">Straps</a>
+                <a href="#" class="w3-bar-item w3-button">Parts</a>
+                <a href="#" class="w3-bar-item w3-button">Tools</a>
+                <a href="#" class="w3-bar-item w3-button">Accessories</a>
+            </div>
+            </div>-->
+            <!--- <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Newsletter</button> <!---->
+            <div class="headingForMenu">
+                <!--   <a href="#" class="w3-bar-item w3-button">Contact</a>
+                <a href="#" data-toggle="modal" data-target="#myModal" class="w3-bar-item w3-button">Newsletter</a>
+                <a href="#" data-toggle="modal" data-target="#myModal" class="w3-bar-item w3-button">Subscribe</a>-->
+            </div>
+        </div>
+        <div class="w3-main" id="main" style="margin-left:340px">
+            <div class="w3-white">
+                <button class="w3-button w3-white w3-xlarge" onclick="w3_open()">&#9776;</button>
+            </div>
+        </div>
+        <div class="w3-main" style="margin-left:330px">
+            <div class="w3-display-container w3-container">
+                <img src="~/Assets/watches images/3.jpg" alt="Watches" style="width:100%" />
+                <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+                    <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
+                    <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
+                    <h1 class="w3-hide-small">COLLECTION 2017</h1>
+                    <p><a href="@Url.Action("Index", "Items")" style="border: 2px solid white;border-radius: 8px;" class="w3-button w3-black w3-padding-large w3-large">SHOP NOW</a></p>
+                </div>
+
+                @*<div style="padding-top:20px;padding-bottom:10px;text-shadow:1px 1px 0 #444;margin-left:0px;">
+                                        <p>CFW-100</p>
+                                        <p>$3999.00</p>
+
+                                        <input type="submit" style="border-radius: 8px;" class="w3-button w3-ripple w3-black" value="Add to cart" />
+                    </div>*@
+            </div>
+        </div>
+
+        <script>
+            function w3_open() {
+                document.getElementById("main").style.marginLeft = "none";
+                document.getElementById("mySidebar").style.width = "20%";
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("openNav").style.display = 'block';
+            }
+            function w3_close() {
+                document.getElementById("main").style.marginLeft = "none";
+                document.getElementById("mySidebar").style.display = "none";
+                document.getElementById("openNav").style.display = "inline-block";
+            }
+        </script>
+    </nav>
+
+    <!--start navigation bar--
+    <button
+            onclick="myFunction()"></button>
+    <div id="nav">
+    </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("nav");
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+    </script>
+
+
+
+
+
+    <nav style="width:130px; position:fixed">
+        <div class="headingForMenu">LOGO</div>
+        <div class="myCustomNavItem">
+            <a href="#">CFW Series</a>
+            <a href="#">CFAW Series</a>
+            <a href="#">Collection</a>
+            <div>
+                <a href="#">2016</a>
+                <a href="#">2015</a>
+                <a href="#">2014</a>
+            </div>
+            <a href="#">Straps</a>
+            <a href="#">Parts</a>
+            <a href="#">Tools</a>
+            <a href="#">Accessories</a>
+        </div>
+        <div class="headingForMenu">
+            <a href="#">Contact</a>
+            <a href="#">Newsletter</a>
+            <a href="#">Subscribe</a>
+        </div>
+    </nav>
+    <!--end navigation bar-->
+    <!--start first row--
+    <div style="margin-left:200px; margin-right:100px;">
+        <div class="container">
+            <div class="row" style="padding:40px;">
+                <div class="col-md-12">
+                    <img src="watches images/3.jpg" />
+                    <div style="padding-top:30px;text-shadow:1px 1px 0 #444">
+                        <p>CFW-100</p>
+                        <p>$3999.00</p>
+                        <button class="w3-button w3-ripple w3-black">Buy</button>
+                    </div>
+                </div>
+            </div>
+            <!--end first row-->
+    <!--start second row-->
+    @*<div style="margin-left:340px;">*@
+    @RenderBody()
+    <!-- Subscribe section -->
+    <div class="w3-main" style="margin-left:330px">
+        <div class="w3-container w3-black w3-padding-32">
+            <h1>Subscribe</h1>
+            <p>To get special offers and VIP treatment:</p>
+            <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>
+            <button type="button" style="border-radius: 8px;" class="w3-button w3-red w3-margin-bottom" data-toggle="modal" data-target="#myModal">Subscribe</button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+            <div class="w3-row-padding">
+                <div class="w3-col s4">
+                    <h4>Contact</h4>
+                    <p>Questions? Go ahead.</p>
+                    <form action="/action_page.php" target="_blank">
+                        <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
+                        <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+                        <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Subject" required></p>
+                        <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Message" required></p>
+                        <button type="submit" class="w3-button w3-block w3-black">Send</button>
+                    </form>
+                </div>
+
+                <div class="w3-col s4">
+                    <h4>About</h4>
+                    <p><a href="#">About us</a></p>
+                    <p><a href="#">We're hiring</a></p>
+                    <p><a href="#">Support</a></p>
+                    <p><a href="#">Find store</a></p>
+                    <p><a href="#">Shipment</a></p>
+                    <p><a href="#">Payment</a></p>
+                    <p><a href="#">Gift card</a></p>
+                    <p><a href="#">Return</a></p>
+                    <p><a href="#">Help</a></p>
+                </div>
+
+                <div class="w3-col s4 w3-justify">
+                    <h4>Store</h4>
+                    <p><i class="fa fa-fw fa-map-marker"></i> Wicked Watches</p>
+                    <p><i class="fa fa-fw fa-phone"></i> (336)666-9999</p>
+                    <p><i class="fa fa-fw fa-envelope"></i> qpc4ever@gmail.com</p>
+                    <h4>We accept</h4>
+                    <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>
+                    <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>
+                    <br>
+                    <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>
+                    <i class="fa fa-instagram w3-hover-opacity w3-large"></i>
+                    <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>
+                    <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>
+                    <i class="fa fa-twitter w3-hover-opacity w3-large"></i>
+                    <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>
+                </div>
+            </div>
+        </footer>
+
+        <div class="w3-black w3-center w3-padding-24">
+            Powered by <a href="http://www.coderfoundry.com">CoderFoundry</a> &copy;Copyright
+
+            <!-- End page content -->
+        </div>
+    </div>
+    <script src="~/Assets/scripts/jquery-1.9.1.js"></script>
+    <script src="~/Assets/scripts/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
+    <!--footer ends-->
+</body>
+</html>

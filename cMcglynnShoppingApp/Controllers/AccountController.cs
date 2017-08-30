@@ -13,7 +13,7 @@ using cMcglynnShoppingApp.Models;
 namespace cMcglynnShoppingApp.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : Universal
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
