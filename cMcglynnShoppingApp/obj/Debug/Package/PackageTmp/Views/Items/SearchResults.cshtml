@@ -1,4 +1,4 @@
-﻿@model IEnumerable<cMcglynnShoppingApp.Models.CodeFirst.Item>
+﻿@model IEnumerable<cMcglynnShoppingApp.Models.CodeFirst.Item>      
 
 
 <div class="row">
@@ -14,14 +14,11 @@
 
         @foreach (var item in Model)
         {
-            <div class="col-md-3" style="margin-top:20px;">
+            <div class="col-md-6" style="margin-top:20px;">
                 <a href="@Url.Action("Details", "Items" , new { id = item.Id })">
                     <img src="@item.MediaURL" />
                 </a>
-                <div style="margin-left:580px;background-color:white;padding-bottom:0px;">
-                    <iframe width="420" height="315"
-                            src="https://www.youtube.com/embed/sEBdUiQx6_k?autoplay=1"></iframe>
-                </div>
+                
                 <div style="padding-top:20px;padding-bottom:10px;text-shadow:1px 1px 0 #444;">
                     <p>@item.Name</p>
                     <p>@item.Price</p>
@@ -33,13 +30,17 @@
                     
                     
                     }
+                    <div class="jumbotron" style="margin-left:580px;background-color:white;padding-bottom:0px;">
+                        <iframe width="420" height="315"
+                                src="https://www.youtube.com/embed/sEBdUiQx6_k?autoplay=1"></iframe>
+                    </div>
                 </div>
                     
                 @if (User.IsInRole("Admin"))
                 {
                     <div style="display:inline-flex">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        <button style="border-radius: 8px;border: 2px; margin-top:2px; solid white;" class="w3-button w3-ripple w3-blue">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
+                        <button style="border-radius: 8px;border: 2px; margin-top:2px; solid white;" class="w3-button w3-ripple w3-blue">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>
                     </div>
                 }
 

@@ -7,7 +7,7 @@
     <h2>Create</h2>
 
 
-    @using (Html.BeginForm("Create", "Orders", new { total = ViewBag.CartTotal }))
+    @using (Html.BeginForm(new { total = ViewBag.CartTotal }))
     {
         @Html.AntiForgeryToken()
 
@@ -62,7 +62,7 @@
                     @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            
 
 
             @*<div class="form-group">
@@ -91,12 +91,12 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @ViewBag.CartTotal
+                   $ @ViewBag.CartTotal
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Place Order" class="btn btn-danger" />
+                    <input type="submit" value="Place Order" class="btn btn-danger" style="border-radius: 8px" />
                 </div>
             </div>
         </div>
@@ -104,7 +104,8 @@
     
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        <button style="border-radius: 8px;border: 2px; margin-top:2px; solid white;" class="w3-button w3-ripple w3-blue">@Html.ActionLink("Back to List", "Index")</button>
+        
     </div>
 </div>
     @section Scripts {
