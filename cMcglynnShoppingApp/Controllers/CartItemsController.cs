@@ -97,7 +97,7 @@ namespace cMcglynnShoppingApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemId,CustomerId,Count,created")] CartItem cartItem)
+        public ActionResult Edit([Bind(Include = "Id,ItemId,CustomerId,Count,created,MediaURL")] CartItem cartItem)
         {
             if (ModelState.IsValid)
             {

@@ -8,8 +8,16 @@
 
     <div>
         <h4>CartItem</h4>
+        <img src="@Model.MediaURL" />
         <hr />
         <dl class="dl-horizontal">
+            @*<dt>
+                @Html.DisplayNameFor(model => model.MediaURL)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MediaURL)
+            </dd>*@
             <dt>
                 @Html.DisplayNameFor(model => model.ItemId)
             </dt>
@@ -19,11 +27,11 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.CustomerId)
+                @Html.DisplayNameFor(model => model.Customer)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.CustomerId)
+                @Html.DisplayFor(model => model.Customer.FirstName)
             </dd>
 
             <dt>

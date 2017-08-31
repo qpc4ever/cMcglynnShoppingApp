@@ -12,6 +12,7 @@ namespace cMcglynnShoppingApp.Models.CodeFirst
         public string CustomerId { get; set; }
         public int Count { get; set; }
         public DateTime created { get; set; }
+         public string MediaURL { get; set; }
 
         public virtual Item Item { get; set; }
         public virtual ApplicationUser Customer { get; set; }
