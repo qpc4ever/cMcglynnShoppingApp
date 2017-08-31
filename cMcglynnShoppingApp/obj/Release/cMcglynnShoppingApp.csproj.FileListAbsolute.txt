@@ -93,3 +93,4 @@ C:\Users\demol\Documents\Visual Studio 2017\Projects\cMcglynnShoppingApp\cMcglyn
 C:\Users\demol\Documents\Visual Studio 2017\Projects\cMcglynnShoppingApp\cMcglynnShoppingApp\bin\Microsoft.AI.Web.xml
 C:\Users\demol\Documents\Visual Studio 2017\Projects\cMcglynnShoppingApp\cMcglynnShoppingApp\obj\Release\cMcglynnShoppingApp.dll
 C:\Users\demol\Documents\Visual Studio 2017\Projects\cMcglynnShoppingApp\cMcglynnShoppingApp\obj\Release\cMcglynnShoppingApp.pdb
+C:\Users\demol\documents\visual studio 2017\Projects\cMcglynnShoppingApp\cMcglynnShoppingApp\obj\Release\cMcglynnShoppingApp.csprojResolveAssemblyReference.cache

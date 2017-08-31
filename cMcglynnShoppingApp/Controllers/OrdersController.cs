@@ -20,7 +20,7 @@ namespace cMcglynnShoppingApp.Controllers
         public ActionResult Index()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-            return View(db.Orders.ToList());
+            return View(db.Orders.Where(o => o.CustomerId == user.Id).ToList());
         }
         
         // GET: Orders/Details/5
