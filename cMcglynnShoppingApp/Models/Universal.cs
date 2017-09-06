@@ -25,9 +25,9 @@ namespace cMcglynnShoppingApp.Models
                 ViewBag.TotalCartItems =db.CartItems.Where(c => c.CustomerId == user.Id).ToList();
                 ViewBag.TotalCartItems = user.CartItems.Sum(c => c.Count);
                 decimal Total = 0;
-                foreach (var item in user.CartItems)
+                foreach (var cartItem in db.CartItems.Where(c => c.CustomerId == user.Id).Include("Item"))
                 {
-                    Total += item.Count * item.Item.Price;  // ADDS UP THE TOTAL OF CART ITEMS
+                    Total += cartItem.Count * cartItem.Item.Price;  // ADDS UP THE TOTAL OF CART ITEMS
                         
                 }
                 ViewBag.CartTotal = Total;

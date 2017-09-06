@@ -13,11 +13,12 @@ namespace cMcglynnShoppingApp.Models.CodeFirst
         public int Count { get; set; }
         public DateTime created { get; set; }
          public string MediaURL { get; set; }
+        public decimal Price { get; set; }
 
         public virtual Item Item { get; set; }
         public virtual ApplicationUser Customer { get; set; }
 
-        //public decimal unitTotal
+        //public decimal? unitTotal
         //{
         //    get
         //    {

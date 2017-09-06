@@ -17,11 +17,11 @@ namespace cMcglynnShoppingApp.Controllers
         
 
         // GET: CartItems      
-            [Authorize]
-            public ActionResult Index()
+        [Authorize]
+        public ActionResult Index()
         {   
-            var user = db.Users.Find(User.Identity.GetUserId());// THIS WILL DISPLAY ONLY THE USERS CART ITEMS
-            return View(db.CartItems.ToList());
+            var user = db.Users.Find(User.Identity.GetUserId());// GRABS THE CURRENT USER OBJECT
+            return View(user.CartItems.ToList());// THIS WILL DISPLAY ONLY THE USERS CART ITEMS
         }
 
         // GET: CartItems/Details/5
@@ -40,6 +40,7 @@ namespace cMcglynnShoppingApp.Controllers
         }
 
         // GET: CartItems/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -64,15 +65,24 @@ namespace cMcglynnShoppingApp.Controllers
                 return HttpNotFound();
             }
             // this is the actual code that adds the items to the cart
-            CartItem cartitem = new CartItem();
             var user = db.Users.Find(User.Identity.GetUserId());
 
-            cartitem.Count = 1;
-            cartitem.ItemId = id.Value;
-            cartitem.created = System.DateTime.Now;
-            cartitem.CustomerId = user.Id;
-            db.CartItems.Add(cartitem);
-            db.SaveChanges();
+            if (user.CartItems.Any(c => c.ItemId == id))
+            {
+                var existingCartItem = user.CartItems.FirstOrDefault(c => c.ItemId == id);
+                existingCartItem.Count += 1;
+                db.SaveChanges();
+            }
+            else
+            {
+                CartItem cartitem = new CartItem();
+                cartitem.Count = 1;
+                cartitem.ItemId = id.Value;
+                cartitem.created = System.DateTime.Now;
+                cartitem.CustomerId = user.Id;
+                db.CartItems.Add(cartitem);
+                db.SaveChanges();
+            }
 
             return RedirectToAction("Index", "Items");          
         }
@@ -101,7 +111,7 @@ namespace cMcglynnShoppingApp.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 db.Entry(cartItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
