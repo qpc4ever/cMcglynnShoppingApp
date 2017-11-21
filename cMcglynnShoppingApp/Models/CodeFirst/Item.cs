@@ -16,5 +16,6 @@ namespace cMcglynnShoppingApp.Models.CodeFirst
         public string MediaURL { get; set; }
         [AllowHtml]
         public string Description { get; set; }
+        
     }
 }
